@@ -18,12 +18,16 @@
     "@react-native-community/geolocation": "^3.2.1",
     "@react-native-community/netinfo": "^11.3.2",
     "@tanstack/react-query": "^5.44.0",
+    "@types/lodash": "^4.17.5",
+    "axios": "^1.7.2",
+    "lodash": "^4.17.21",
+    "lucide-react-native": "^0.394.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-native": "0.72.3",
     "react-native-dotenv": "^3.4.11",
-    "react-native-svg": "13.4.0",
-    "react-native-weather-api": "^3.4.0"
+    "react-native-dynamic-skeletons": "^0.7.0",
+    "react-native-svg": "13.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
