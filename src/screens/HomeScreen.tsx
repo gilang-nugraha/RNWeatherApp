@@ -10,39 +10,21 @@ import ForecastCard from '../components/ForecastCard';
 import ForecastTodayList from '../components/ForecastTodayList';
 import SunTimeCard from '../components/SunTimeCard';
 import WeatherCard from '../components/WeatherCard';
-import {useGetForecast, useGetWeather} from '../stores/WeatherStore';
+import {useGetWeather} from '../stores/WeatherStore';
 
 export const HomeScreen = () => {
-  const {
-    isLoading: loadingWeather,
-    data,
-    refetch: refetchWeather,
-    isRefetching: isRefetchingWeather,
-    error: errorWeather,
-  } = useGetWeather();
-
-  const {
-    isLoading: loadingForecast,
-    data: forecast,
-    refetch: refetchForecast,
-    isRefetching: isRefetchingForecast,
-    error: errorForecast,
-  } = useGetForecast();
+  const {isLoading, data, refetch, isRefetching, error} = useGetWeather();
 
   const onRefresh = useCallback(() => {
-    refetchWeather();
-    refetchForecast();
-  }, [refetchWeather, refetchForecast]);
+    refetch();
+  }, [refetch]);
 
-  if (errorWeather && errorForecast) {
+  if (error) {
     return (
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         refreshControl={
-          <RefreshControl
-            refreshing={isRefetchingWeather || isRefetchingForecast}
-            onRefresh={onRefresh}
-          />
+          <RefreshControl refreshing={isRefetching} onRefresh={onRefresh} />
         }
         // eslint-disable-next-line react-native/no-inline-styles
         contentContainerStyle={{
@@ -57,22 +39,19 @@ export const HomeScreen = () => {
     <ScrollView
       contentInsetAdjustmentBehavior="automatic"
       refreshControl={
-        <RefreshControl
-          refreshing={isRefetchingWeather || isRefetchingForecast}
-          onRefresh={onRefresh}
-        />
+        <RefreshControl refreshing={isRefetching} onRefresh={onRefresh} />
       }>
-      <WeatherCard data={data as WeatherType} loading={loadingWeather} />
+      <WeatherCard data={data?.weather as WeatherType} loading={isLoading} />
       <ForecastTodayList
-        data={forecast as ForecastType}
-        loading={loadingForecast}
+        data={data?.forecast as ForecastType}
+        loading={isLoading}
       />
-      <ForecastCard data={forecast as ForecastType} loading={loadingForecast} />
+      <ForecastCard data={data?.forecast as ForecastType} loading={isLoading} />
       <CurrentConditionCard
-        data={data as WeatherType}
-        loading={loadingWeather}
+        data={data?.weather as WeatherType}
+        loading={isLoading}
       />
-      <SunTimeCard data={data as WeatherType} loading={loadingWeather} />
+      <SunTimeCard data={data?.weather as WeatherType} loading={isLoading} />
     </ScrollView>
   );
 };

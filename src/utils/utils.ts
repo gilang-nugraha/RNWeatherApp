@@ -1,3 +1,20 @@
+import {LocationType} from '../../types/LocationType';
+import Geolocation from '@react-native-community/geolocation';
+
+export async function getLocation() {
+  return new Promise<LocationType>((resolve, reject) => {
+    Geolocation.getCurrentPosition(
+      position => {
+        const {latitude, longitude} = position.coords;
+        resolve({latitude, longitude});
+      },
+      error => {
+        reject(error);
+      },
+    );
+  });
+}
+
 interface ConvertProps {
   unixTime: number;
   unixTimezone: number;
