@@ -1,12 +1,41 @@
-import {Card, HStack, Heading, Text, VStack, View} from '@gluestack-ui/themed';
+import {
+  Card,
+  HStack,
+  Heading,
+  Text,
+  VStack,
+  View,
+  Box,
+} from '@gluestack-ui/themed';
 import React from 'react';
 import {WeatherType} from '../../types/WeatherType';
 import {convertUnixToHours} from '../utils/utils';
+import {Skeleton} from './Skeleton';
+import {StyleSheet} from 'react-native';
 
-export const SunTimeCard = ({data}: {data: WeatherType}) => {
-  const {sys} = data;
+const styles = StyleSheet.create({
+  skeleton: {
+    width: '100%',
+    height: 150,
+  },
+});
 
-  if (!data) return <></>;
+export const SunTimeCard = ({
+  data,
+  loading,
+}: {
+  data: WeatherType;
+  loading: boolean;
+}) => {
+  if (loading) {
+    return (
+      <Box p="$4">
+        <Skeleton isLoading={true}>
+          <View style={styles.skeleton} />
+        </Skeleton>
+      </Box>
+    );
+  }
 
   return (
     <View p="$4">
@@ -21,8 +50,8 @@ export const SunTimeCard = ({data}: {data: WeatherType}) => {
             </Text>
             <Heading size="4xl">
               {convertUnixToHours({
-                unixTime: sys.sunrise,
-                unixTimezone: data.timezone,
+                unixTime: data?.sys?.sunrise,
+                unixTimezone: data?.timezone,
               })}
             </Heading>
           </VStack>
@@ -32,8 +61,8 @@ export const SunTimeCard = ({data}: {data: WeatherType}) => {
             </Text>
             <Heading size="4xl">
               {convertUnixToHours({
-                unixTime: sys.sunset,
-                unixTimezone: data.timezone,
+                unixTime: data?.sys?.sunset,
+                unixTimezone: data?.timezone,
               })}
             </Heading>
           </VStack>

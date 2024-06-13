@@ -27,6 +27,7 @@
     "react-native": "0.72.3",
     "react-native-dotenv": "^3.4.11",
     "react-native-dynamic-skeletons": "^0.7.0",
+    "react-native-linear-gradient": "^2.8.3",
     "react-native-svg": "13.4.0"
   },
   "devDependencies": {
